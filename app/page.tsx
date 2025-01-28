@@ -1,8 +1,6 @@
 'use client'; // Mark the file as a client component  
 
 import { useEffect, useState } from 'react';  
-import Tabs from './components/ui/Tabs'
-const { TabNav, TabList, TabContent } = Tabs
 const Home: React.FC = () => {  
   const [settings, setSettings] = useState({  
     buy_percentage: '',  
