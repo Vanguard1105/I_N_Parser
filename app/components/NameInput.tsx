@@ -21,7 +21,7 @@ const NameInput: React.FC<NameInputProps> = ({
   disabled = false,
 }) => {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 py-4">
       <label
         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
         htmlFor={id}

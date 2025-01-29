@@ -1,3 +1,6 @@
+// my-telegram-mini-app/app/components/ParameterInput.tsx
+import React from "react";
+
 interface ParameterInputProps {
   label: string;
   name: string;
@@ -13,25 +16,26 @@ const ParameterInput: React.FC<ParameterInputProps> = ({
   value,
   onChange,
   icon,
-  placeholder = "",
+  placeholder = "Not Set",
 }) => {
   return (
     <div className="space-y-2">
-      <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2">
+      <label
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
+        htmlFor={name}
+      >
         {icon}
         {label}
       </label>
-      <div>
-        <input
-          type="text"
-          className="flex h-9 w-full rounded-md border px-3 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-slate-800 border-slate-700"
-          name={name}
-          id={name}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-        />
-      </div>
+      <input
+        type="text"
+        className="flex h-9 rounded-md border px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-slate-800 border-slate-700 w-full"
+        name={name}
+        id={name}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
     </div>
   );
 };
