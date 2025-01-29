@@ -1,6 +1,9 @@
+// my-telegram-mini-app/app/components/SettingsForm.tsx
 import { useState } from "react";
 import Dropdown from "./Dropdown";
 import ParameterInput from "./ParameterInput";
+import CustomDropdown from "./CustomDropdown";
+import NameInput from "./NameInput";
 
 const SettingsForm: React.FC = () => {
   const [settings, setSettings] = useState({
@@ -26,24 +29,43 @@ const SettingsForm: React.FC = () => {
     maxMedianROI: "",
     minTrades: "1",
     maxTrades: "",
+    name: "vanguard_1", // Add name to settings state
+    statisticPeriod: "30",
   });
 
-  const [selectedOption, setSelectedOption] = useState("option1");
+  const [selectedOption, setSelectedOption] = useState(
+    "6793b79af4b7571a5e546eec"
+  );
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+  const handleInputChange = (name: string, value: string) => {
     setSettings((prevSettings) => ({
       ...prevSettings,
       [name]: value,
     }));
   };
 
+  const handleCustomDropdownChange = (value: string) => {
+    setSelectedOption(value);
+  };
+
+  const handleStatisticPeriodChange = (value: string) => {
+    handleInputChange("statisticPeriod", value);
+  };
+
+  const options = [
+    { value: "6793b79af4b7571a5e546eec", label: "vanguard_1" },
+    // Add more options if needed
+  ];
+
+  const statisticPeriodOptions = [
+    { value: "1", label: "1d" },
+    { value: "7", label: "7d" },
+    { value: "14", label: "14d" },
+    { value: "30", label: "30d" },
+  ];
+
   return (
-    <div className="flex flex-col bg-slate-900 mt-4 w-[100% - 8px] h-[100%] mx-1 px-2">
+    <div className="flex flex-col bg-slate-900 mt-4 w-[calc(100% - 8px)] h-[100%] mx-1 px-2">
       <div className="flex flex-row justify-between p-2 w-full items-center">
         <div className="text-white">Setting Menu</div>
         <div className="flex flex-row gap-2 py-5">
@@ -87,25 +109,62 @@ const SettingsForm: React.FC = () => {
         </div>
       </div>
       <div className="flex items-center justify-between px-2">
-        <select
-          id="options"
-          className="flex h-9 w-full items-center whitespace-nowrap rounded-md border px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 bg-slate-800 border-slate-700 text-white"
+        <CustomDropdown
+          options={options}
           value={selectedOption}
-          onChange={handleChange}
-        >
-          <option value="6793b79af4b7571a5e546eec" className="bg-green-500">
-            vanguard_1
-          </option>
-        </select>
+          onChange={handleCustomDropdownChange}
+        />
       </div>
       <div className="px-2">
         <Dropdown title="PARAMETERS">
+          <div className="text-slate-100 py-2 pb-4">
+            <NameInput
+              label="Name"
+              name="name"
+              id="name"
+              placeholder="Enter name"
+              value={settings.name}
+              onChange={(event) =>
+                handleInputChange("name", event.target.value)
+              }
+            />
+            <div className="space-y-2 py-4">
+              <label
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
+                htmlFor="filterByLastNdays"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-clock h-4 w-4 text-blue-500"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                Statistic Period
+              </label>
+              <CustomDropdown
+                options={statisticPeriodOptions}
+                value={settings.statisticPeriod}
+                onChange={handleStatisticPeriodChange}
+              />
+            </div>
+          </div>
           <div className="grid grid-cols-2 gap-4 text-slate-100">
             <ParameterInput
               label="Min WR"
               name="minWR"
               value={settings.minWR}
-              onChange={handleInputChange}
+              onChange={(event) =>
+                handleInputChange("minWR", event.target.value)
+              }
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +189,9 @@ const SettingsForm: React.FC = () => {
               label="Max WR"
               name="maxWR"
               value={settings.maxWR}
-              onChange={handleInputChange}
+              onChange={(event) =>
+                handleInputChange("maxWR", event.target.value)
+              }
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +216,9 @@ const SettingsForm: React.FC = () => {
               label="Min ROI"
               name="minROI"
               value={settings.minROI}
-              onChange={handleInputChange}
+              onChange={(event) =>
+                handleInputChange("minROI", event.target.value)
+              }
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -178,7 +241,9 @@ const SettingsForm: React.FC = () => {
               label="Max ROI"
               name="maxROI"
               value={settings.maxROI}
-              onChange={handleInputChange}
+              onChange={(event) =>
+                handleInputChange("maxROI", event.target.value)
+              }
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -201,7 +266,9 @@ const SettingsForm: React.FC = () => {
               label="Min Median ROI"
               name="minMedianROI"
               value={settings.minMedianROI}
-              onChange={handleInputChange}
+              onChange={(event) =>
+                handleInputChange("minMedianROI", event.target.value)
+              }
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +291,9 @@ const SettingsForm: React.FC = () => {
               label="Max Median ROI"
               name="maxMedianROI"
               value={settings.maxMedianROI}
-              onChange={handleInputChange}
+              onChange={(event) =>
+                handleInputChange("maxMedianROI", event.target.value)
+              }
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -247,7 +316,9 @@ const SettingsForm: React.FC = () => {
               label="Min Trades"
               name="minTrades"
               value={settings.minTrades}
-              onChange={handleInputChange}
+              onChange={(event) =>
+                handleInputChange("minTrades", event.target.value)
+              }
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -272,7 +343,9 @@ const SettingsForm: React.FC = () => {
               label="Max Trades"
               name="maxTrades"
               value={settings.maxTrades}
-              onChange={handleInputChange}
+              onChange={(event) =>
+                handleInputChange("maxTrades", event.target.value)
+              }
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
