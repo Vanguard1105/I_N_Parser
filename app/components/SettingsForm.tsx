@@ -1,5 +1,5 @@
 // my-telegram-mini-app/app/components/SettingsForm.tsx
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Dropdown from "./Dropdown";
 import ParameterInput from "./ParameterInput";
 import CustomDropdown from "./CustomDropdown";
@@ -61,6 +61,10 @@ const SettingsForm: React.FC = () => {
     }));
   };
 
+  const handleRocketChange = (value: string) => {
+    handleInputChange("rocketIs", value);
+  };
+
   const handleCheckboxChange = (name: string, value: boolean) => {
     setSettings((prevSettings) => ({
       ...prevSettings,
@@ -74,6 +78,69 @@ const SettingsForm: React.FC = () => {
 
   const handleStatisticPeriodChange = (value: string) => {
     handleInputChange("statisticPeriod", value);
+  };
+  const [isSliding, setIsSliding] = useState(false);
+
+  // Handle mouse down event
+  const handleMouseDown = () => {
+    setIsSliding(true);
+  };
+  // Calculate the percentage of the current value relative to the maximum
+  const currentValue = Number(settings.rocketIs);
+  const percentage = ((currentValue - 100) / (10000 - 100)) * 100;
+
+  // Calculate the filled portion styles
+  const filledStyle: React.CSSProperties = {
+    position: "absolute" as "absolute", // Ensuring TypeScript accepts the value
+    height: "100%",
+    backgroundColor: "green", // Change color based on filled percentage
+    width: `${Math.min(percentage, 100)}%`, // Fill from 0% to current percentage
+    left: 0,
+  };
+  // Calculate and set rocketIs value based on mouse movement
+  const handleMouseMove = useCallback(
+    (event: MouseEvent) => {
+      if (isSliding) {
+        const sliderRect = document
+          .getElementById("slider")
+          ?.getBoundingClientRect();
+        if (sliderRect) {
+          const sliderWidth = sliderRect.width;
+          const offsetX = event.clientX - sliderRect.left;
+          const percentage = Math.min(Math.max(offsetX / sliderWidth, 0), 1); // clamp percentage
+          const newValue = Math.round(percentage * (10000 - 100) + 100); // Calculate new value between 100 and 10000
+          handleRocketChange(newValue.toString());
+        }
+      }
+    },
+    [isSliding]
+  );
+
+  // Handle mouse up event
+  const handleMouseUp = () => {
+    setIsSliding(false);
+  };
+
+  // Hook for adding and cleaning up event listeners
+  React.useEffect(() => {
+    if (isSliding) {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    }
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isSliding, handleMouseMove]);
+
+  // Handle click directly on the slider track
+  const handleSliderClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const sliderRect = event.currentTarget.getBoundingClientRect();
+    const sliderWidth = sliderRect.width;
+    const offsetX = event.clientX - sliderRect.left;
+    const percentage = Math.min(Math.max(offsetX / sliderWidth, 0), 1);
+    const newValue = Math.round(percentage * (10000 - 100) + 100); // Calculate new value directly from click
+    handleRocketChange(newValue.toString());
   };
 
   const options = [
@@ -464,20 +531,44 @@ const SettingsForm: React.FC = () => {
                     <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
                     <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
                   </svg>
-                  Rocket is ≥<u> 100 % ( 1x ) </u>ROI in one trade
+                  Rocket is ≥<u> {settings.rocketIs} % ( 1x ) </u>ROI in one
+                  trade
                 </label>
                 <div>
-                  <input
-                    type="text"
-                    className="flex h-9 rounded-md border px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-slate-800 border-slate-700 w-full"
-                    name="rocketIs"
-                    id="rocketIs"
-                    placeholder="Not Set"
-                    value={settings.rocketIs}
-                    onChange={(event) =>
-                      handleInputChange("rocketIs", event.target.value)
-                    }
-                  />
+                  <span
+                    dir="ltr"
+                    className="relative flex w-full touch-none select-none items-center py-2 cursor-pointer"
+                    id="slider" // Added ID for reference
+                    onClick={handleSliderClick} // Handle click on slider
+                  >
+                    <span
+                      data-orientation="horizontal"
+                      className="relative h-1.5 w-full grow overflow-hidden rounded-full bg-gray-600"
+                    >
+                      <span
+                        data-orientation="horizontal"
+                        style={filledStyle} // Apply filled style
+                      ></span>
+                    </span>
+                    <span
+                      style={{
+                        transform: "translateX(-50%)",
+                        position: "absolute",
+                        left: `${Math.min(Math.max(((currentValue - 100) / (10000 - 100)) * 100, 0), 100)}%`, // Adjust left position based on value
+                      }}
+                    >
+                      <span
+                        role="slider"
+                        aria-valuemin={100}
+                        aria-valuemax={10000}
+                        aria-orientation="horizontal"
+                        tabIndex={0}
+                        className="block h-4 w-4 rounded-full border bg-white shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-green-300 disabled:pointer-events-none disabled:opacity-50"
+                        aria-valuenow={currentValue}
+                        onMouseDown={handleMouseDown} // Start sliding
+                      ></span>
+                    </span>
+                  </span>
                 </div>
               </div>
               <div className="flex flex-col gap-2">
@@ -1124,69 +1215,11 @@ const SettingsForm: React.FC = () => {
               </svg>
               Sort By
             </label>
-            <div>
-              <button
-                type="button"
-                role="combobox"
-                aria-controls="radix-:rb:"
-                aria-expanded="false"
-                aria-autocomplete="none"
-                dir="ltr"
-                data-state="closed"
-                className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 bg-slate-800 border-slate-700 text-white"
-                id="sortBy"
-                onClick={() => {
-                  // Handle dropdown toggle
-                }}
-              >
-                <span style={{ pointerEvents: "none" }}>
-                  {sortByOptions.find(
-                    (option) => option.value === settings.sortBy
-                  )?.label || "WinRate"}
-                </span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-chevron-down h-4 w-4 opacity-50"
-                  aria-hidden="true"
-                >
-                  <path d="m6 9 6 6 6-6"></path>
-                </svg>
-              </button>
-              <select
-                aria-hidden="true"
-                tabIndex={-1}
-                style={{
-                  position: "absolute",
-                  border: "0px",
-                  width: "1px",
-                  height: "1px",
-                  padding: "0px",
-                  margin: "-1px",
-                  overflow: "hidden",
-                  clip: "rect(0px, 0px, 0px, 0px)",
-                  whiteSpace: "nowrap",
-                  overflowWrap: "normal",
-                }}
-                value={settings.sortBy}
-                onChange={(event) =>
-                  handleInputChange("sortBy", event.target.value)
-                }
-              >
-                {sortByOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <CustomDropdown
+              options={sortByOptions}
+              value={settings.sortBy}
+              onChange={(value) => handleInputChange("sortBy", value)}
+            />
           </div>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -1232,7 +1265,9 @@ const SettingsForm: React.FC = () => {
                     </span>
                     <span
                       aria-hidden="true"
-                      className="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out data-[state=checked]:translate-x-4"
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out ${
+                        settings.addTxtFile ? "translate-x-4" : "translate-x-0"
+                      }`}
                     ></span>
                   </button>
                 </div>
