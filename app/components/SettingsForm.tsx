@@ -4,6 +4,8 @@ import Dropdown from "./Dropdown";
 import ParameterInput from "./ParameterInput";
 import CustomDropdown from "./CustomDropdown";
 import NameInput from "./NameInput";
+import Slider from "./Slider";
+import LabelWithIcon from "./LabelWithIcon";
 
 const SettingsForm: React.FC = () => {
   const [settings, setSettings] = useState({
@@ -48,6 +50,14 @@ const SettingsForm: React.FC = () => {
     maxOngoingTradesPercentage: "100",
     sortBy: "wr",
     addTxtFile: true,
+    minAvgTradeDuration: 0,
+    maxAvgTradeDuration: 0,
+    minMedianTradeDuration: 0,
+    maxMedianTradeDuration: 0,
+    minAvgFirstTxMCAP: "",
+    maxAvgFirstTxMCAP: "",
+    minAvgLastTxMCAP: "",
+    maxAvgLastTxMCAP: "",
   });
 
   const [selectedOption, setSelectedOption] = useState(
@@ -172,15 +182,8 @@ const SettingsForm: React.FC = () => {
           <div className="flex flex-row text-green-400 items-center hover:text-green-500 cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
               viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-circle-plus"
+              className="svg-custom-style lucide lucide-circle-plus"
             >
               <circle cx="12" cy="12" r="10"></circle>
               <path d="M8 12h8"></path>
@@ -191,15 +194,8 @@ const SettingsForm: React.FC = () => {
           <div className="flex flex-row text-blue-400 items-center hover:text-blue-500 cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
               viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-copy"
+              className="svg-custom-style lucide lucide-copy"
             >
               <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
               <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2z"></path>
@@ -221,15 +217,8 @@ const SettingsForm: React.FC = () => {
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
               viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-settings h-4 w-4 text-gray-400"
+              className="svg-custom-style lucide lucide-settings h-4 w-4 text-gray-400"
             >
               <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0-.73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43-.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
               <circle cx="12" cy="12" r="3"></circle>
@@ -254,15 +243,8 @@ const SettingsForm: React.FC = () => {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
                   viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-clock h-4 w-4 text-blue-500"
+                  className="svg-custom-style lucide lucide-clock h-4 w-4 text-blue-500"
                 >
                   <circle cx="12" cy="12" r="10"></circle>
                   <polyline points="12 6 12 12 16 14"></polyline>
@@ -287,15 +269,8 @@ const SettingsForm: React.FC = () => {
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
                   viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-chart-bar h-4 w-4 text-red-500"
+                  className="svg-custom-style lucide lucide-chart-bar h-4 w-4 text-red-500"
                 >
                   <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
                   <path d="M7 16h8"></path>
@@ -314,15 +289,8 @@ const SettingsForm: React.FC = () => {
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
                   viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-chart-bar h-4 w-4 text-red-500"
+                  className="svg-custom-style lucide lucide-chart-bar h-4 w-4 text-red-500"
                 >
                   <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
                   <path d="M7 16h8"></path>
@@ -341,15 +309,8 @@ const SettingsForm: React.FC = () => {
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
                   viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-trending-up h-4 w-4 text-purple-500"
+                  className="svg-custom-style lucide lucide-trending-up h-4 w-4 text-purple-500"
                 >
                   <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
                   <polyline points="16 7 22 7 22 13"></polyline>
@@ -366,15 +327,8 @@ const SettingsForm: React.FC = () => {
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
                   viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-trending-up h-4 w-4 text-purple-500"
+                  className="svg-custom-style lucide lucide-trending-up h-4 w-4 text-purple-500"
                 >
                   <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
                   <polyline points="16 7 22 7 22 13"></polyline>
@@ -391,15 +345,8 @@ const SettingsForm: React.FC = () => {
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
                   viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-trending-up h-4 w-4 text-purple-500"
+                  className="svg-custom-style lucide lucide-trending-up h-4 w-4 text-purple-500"
                 >
                   <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
                   <polyline points="16 7 22 7 22 13"></polyline>
@@ -416,15 +363,8 @@ const SettingsForm: React.FC = () => {
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
                   viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-trending-up h-4 w-4 text-purple-500"
+                  className="svg-custom-style lucide lucide-trending-up h-4 w-4 text-purple-500"
                 >
                   <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
                   <polyline points="16 7 22 7 22 13"></polyline>
@@ -441,15 +381,8 @@ const SettingsForm: React.FC = () => {
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
                   viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-hash h-4 w-4 text-blue-500"
+                  className="svg-custom-style lucide lucide-hash h-4 w-4 text-blue-500"
                 >
                   <line x1="4" x2="20" y1="9" y2="9"></line>
                   <line x1="4" x2="20" y1="15" y2="15"></line>
@@ -468,15 +401,8 @@ const SettingsForm: React.FC = () => {
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
                   viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-hash h-4 w-4 text-blue-500"
+                  className="svg-custom-style lucide lucide-hash h-4 w-4 text-blue-500"
                 >
                   <line x1="4" x2="20" y1="9" y2="9"></line>
                   <line x1="4" x2="20" y1="15" y2="15"></line>
@@ -492,15 +418,8 @@ const SettingsForm: React.FC = () => {
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
               viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-crown h-4 w-4 text-yellow-400"
+              className="svg-custom-style lucide lucide-crown h-4 w-4 text-yellow-400"
             >
               <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path>
               <path d="M5 21h14"></path>
@@ -516,15 +435,8 @@ const SettingsForm: React.FC = () => {
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
                     viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-rocket h-4 w-4 text-red-500"
+                    className="svg-custom-style lucide lucide-rocket h-4 w-4 text-red-500"
                   >
                     <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
                     <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
@@ -583,15 +495,8 @@ const SettingsForm: React.FC = () => {
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
                         viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="lucide lucide-rocket h-4 w-4 text-yellow-300"
+                        className="svg-custom-style lucide lucide-rocket h-4 w-4 text-yellow-300"
                       >
                         <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
                         <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
@@ -620,15 +525,8 @@ const SettingsForm: React.FC = () => {
                       <div className="relative pr-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
                           viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="lucide lucide-rocket h-4 w-4 text-orange-400"
+                          className="svg-custom-style lucide lucide-rocket h-4 w-4 text-orange-400"
                         >
                           <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
                           <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
@@ -637,15 +535,8 @@ const SettingsForm: React.FC = () => {
                         </svg>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
                           viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="lucide lucide-rocket h-4 w-4 text-orange-400 absolute top-0 left-2"
+                          className="svg-custom-style lucide lucide-rocket h-4 w-4 text-orange-400 absolute top-0 left-2"
                         >
                           <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
                           <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
@@ -675,15 +566,8 @@ const SettingsForm: React.FC = () => {
                       <div className="relative pr-4">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
                           viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="lucide lucide-rocket h-4 w-4 text-red-500"
+                          className="svg-custom-style lucide lucide-rocket h-4 w-4 text-red-500"
                         >
                           <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
                           <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
@@ -692,15 +576,8 @@ const SettingsForm: React.FC = () => {
                         </svg>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
                           viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="lucide lucide-rocket h-4 w-4 text-red-500 absolute top-0 left-2"
+                          className="svg-custom-style lucide lucide-rocket h-4 w-4 text-red-500 absolute top-0 left-2"
                         >
                           <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
                           <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
@@ -709,15 +586,8 @@ const SettingsForm: React.FC = () => {
                         </svg>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
                           viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="lucide lucide-rocket h-4 w-4 text-red-500 absolute top-0 left-4"
+                          className="svg-custom-style lucide lucide-rocket h-4 w-4 text-red-500 absolute top-0 left-4"
                         >
                           <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
                           <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
@@ -749,15 +619,8 @@ const SettingsForm: React.FC = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-zap h-4 w-4 text-yellow-500"
+                      className="svg-custom-style lucide lucide-zap h-4 w-4 text-yellow-500"
                     >
                       <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
                     </svg>
@@ -791,15 +654,8 @@ const SettingsForm: React.FC = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-rocket h-4 w-4 text-green-500"
+                      className="svg-custom-style lucide lucide-rocket h-4 w-4 text-green-500"
                     >
                       <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
                       <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
@@ -831,15 +687,8 @@ const SettingsForm: React.FC = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-wallet h-4 w-4 text-yellow-500"
+                      className="svg-custom-style lucide lucide-wallet h-4 w-4 text-yellow-500"
                     >
                       <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path>
                       <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>
@@ -869,15 +718,8 @@ const SettingsForm: React.FC = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-wallet h-4 w-4 text-yellow-500"
+                      className="svg-custom-style lucide lucide-wallet h-4 w-4 text-yellow-500"
                     >
                       <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path>
                       <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>
@@ -907,15 +749,8 @@ const SettingsForm: React.FC = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-wallet h-4 w-4 text-fuchsia-500"
+                      className="svg-custom-style lucide lucide-wallet h-4 w-4 text-fuchsia-500"
                     >
                       <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path>
                       <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>
@@ -945,15 +780,8 @@ const SettingsForm: React.FC = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-wallet h-4 w-4 text-fuchsia-500"
+                      className="svg-custom-style lucide lucide-wallet h-4 w-4 text-fuchsia-500"
                     >
                       <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path>
                       <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>
@@ -983,15 +811,8 @@ const SettingsForm: React.FC = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-piggy-bank h-4 w-4 text-yellow-300"
+                      className="svg-custom-style lucide lucide-piggy-bank h-4 w-4 text-yellow-300"
                     >
                       <path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2V5z"></path>
                       <path d="M2 9v1c0 1.1.9 2 2 2h1"></path>
@@ -1022,15 +843,8 @@ const SettingsForm: React.FC = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-piggy-bank h-4 w-4 text-yellow-300"
+                      className="svg-custom-style lucide lucide-piggy-bank h-4 w-4 text-yellow-300"
                     >
                       <path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2V5z"></path>
                       <path d="M2 9v1c0 1.1.9 2 2 2h1"></path>
@@ -1061,15 +875,8 @@ const SettingsForm: React.FC = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-trending-down h-4 w-4 text-red-500"
+                      className="svg-custom-style lucide lucide-trending-down h-4 w-4 text-red-500"
                     >
                       <polyline points="22 17 13.5 8.5 8.5 13.5 2 7"></polyline>
                       <polyline points="16 17 22 17 22 11"></polyline>
@@ -1102,15 +909,8 @@ const SettingsForm: React.FC = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-wallet h-4 w-4 text-green-300"
+                      className="svg-custom-style lucide lucide-wallet h-4 w-4 text-green-300"
                     >
                       <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path>
                       <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>
@@ -1149,15 +949,8 @@ const SettingsForm: React.FC = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-chart-line h-4 w-4 text-orange-300"
+                      className="svg-custom-style lucide lucide-chart-line h-4 w-4 text-orange-300"
                     >
                       <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
                       <path d="m19 9-5 5-4-4-3 3"></path>
@@ -1196,15 +989,8 @@ const SettingsForm: React.FC = () => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
                 viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-list h-4 w-4 text-gray-400"
+                className="svg-custom-style lucide lucide-list h-4 w-4 text-gray-400"
               >
                 <path d="M3 12h.01"></path>
                 <path d="M3 18h.01"></path>
@@ -1229,15 +1015,8 @@ const SettingsForm: React.FC = () => {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
                   viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-rows4 h-4 w-4 text-green-600 "
+                  className="svg-custom-style lucide lucide-rows4 h-4 w-4 text-green-600 "
                 >
                   <rect width="18" height="18" x="3" y="3" rx="2"></rect>
                   <path d="M21 7.5H3"></path>
@@ -1274,6 +1053,212 @@ const SettingsForm: React.FC = () => {
               </div>
             </div>
           </div>
+          <Dropdown
+            title="DURATION PARAMETERS"
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className="svg-custom-style lucide lucide-timer h-4 w-4 text-green-400"
+              >
+                <line x1="10" x2="14" y1="2" y2="2" />
+                <line x1="12" x2="15" y1="14" y2="11" />
+                <circle cx="12" cy="14" r="8" />
+              </svg>
+            }
+          >
+            <div className="space-y-2 py-2">
+              <div className="space-y-2">
+                <LabelWithIcon
+                  label={`Min Avg Trade Duration (minutes) ${settings.minAvgTradeDuration != 0 ? `${settings.minAvgTradeDuration}m` : "Not set"}`}
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="svg-custom-style lucide lucide-clock h-4 w-4 text-green-500 svg-custom-style"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                  }
+                  htmlFor="minAvgTradeDuration"
+                />
+                <Slider
+                  name="minAvgTradeDuration"
+                  value={settings.minAvgTradeDuration}
+                  onChange={handleInputChange}
+                  min={0}
+                  max={60}
+                />
+              </div>
+              <div className="space-y-2">
+                <LabelWithIcon
+                  label={`Max Avg Trade Duration (minutes) ${settings.maxAvgTradeDuration != 0 ? `${settings.maxAvgTradeDuration}m` : "Not set"}`}
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="svg-custom-style lucide lucide-clock h-4 w-4 text-yellow-500 svg-custom-style"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                  }
+                  htmlFor="maxAvgTradeDuration"
+                />
+                <Slider
+                  name="maxAvgTradeDuration"
+                  value={settings.maxAvgTradeDuration}
+                  onChange={handleInputChange}
+                  min={0}
+                  max={60}
+                />
+              </div>
+              <div className="space-y-2">
+                <LabelWithIcon
+                  label={`Min Median Trade Duration (minutes) ${settings.minMedianTradeDuration != 0 ? `${settings.minMedianTradeDuration}m` : "Not set"}`}
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="svg-custom-style lucide lucide-clock1 h-4 w-4 text-green-500 svg-custom-style"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                  }
+                  htmlFor="minMedianTradeDuration"
+                />
+                <Slider
+                  name="minMedianTradeDuration"
+                  value={settings.minMedianTradeDuration}
+                  onChange={handleInputChange}
+                  min={0}
+                  max={60}
+                />
+              </div>
+              <div className="space-y-2">
+                <LabelWithIcon
+                  label={`Max Median Trade Duration (minutes) ${settings.maxMedianTradeDuration != 0 ? `${settings.maxMedianTradeDuration}m` : "Not set"}`}
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="svg-custom-style lucide lucide-clock1 h-4 w-4 text-yellow-500 svg-custom-style"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                  }
+                  htmlFor="maxMedianTradeDuration"
+                />
+                <Slider
+                  name="maxMedianTradeDuration"
+                  value={settings.maxMedianTradeDuration}
+                  onChange={handleInputChange}
+                  min={0}
+                  max={60}
+                />
+              </div>
+            </div>
+          </Dropdown>
+          <Dropdown
+            title="MCAP PARAMETERS"
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className="svg-custom-style lucide lucide-chart-bar-big h-4 w-4 text-red-400"
+              >
+                <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                <rect x="7" y="13" width="9" height="4" rx="1"></rect>
+                <rect x="7" y="5" width="12" height="4" rx="1"></rect>
+              </svg>
+            }
+          >
+            <div className="grid grid-cols-2 gap-4 text-slate-100">
+              <ParameterInput
+                label="Min Avg First TX MCAP"
+                name="minAvgFirstTxMCAP"
+                value={settings.minAvgFirstTxMCAP}
+                onChange={(event) =>
+                  handleInputChange("minAvgFirstTxMCAP", event.target.value)
+                }
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className="svg-custom-style lucide lucide-chart-bar h-4 w-4 text-blue-500"
+                  >
+                    <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                    <path d="M7 16h8"></path>
+                    <path d="M7 11h12"></path>
+                    <path d="M7 6h3"></path>
+                  </svg>
+                }
+              />
+              <ParameterInput
+                label="Max Avg First TX MCAP"
+                name="maxAvgFirstTxMCAP"
+                value={settings.maxAvgFirstTxMCAP}
+                onChange={(event) =>
+                  handleInputChange("maxAvgFirstTxMCAP", event.target.value)
+                }
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className="svg-custom-style lucide lucide-chart-bar h-4 w-4 text-blue-500"
+                  >
+                    <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                    <path d="M7 16h8"></path>
+                    <path d="M7 11h12"></path>
+                    <path d="M7 6h3"></path>
+                  </svg>
+                }
+              />
+              <ParameterInput
+                label="Min Avg Last TX MCAP"
+                name="minAvgLastTxMCAP"
+                value={settings.minAvgLastTxMCAP}
+                onChange={(event) =>
+                  handleInputChange("minAvgLastTxMCAP", event.target.value)
+                }
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className="svg-custom-style lucide lucide-chart-bar h-4 w-4 text-purple-500"
+                  >
+                    <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                    <path d="M7 16h8"></path>
+                    <path d="M7 11h12"></path>
+                    <path d="M7 6h3"></path>
+                  </svg>
+                }
+              />
+              <ParameterInput
+                label="Max Avg Last TX MCAP"
+                name="maxAvgLastTxMCAP"
+                value={settings.maxAvgLastTxMCAP}
+                onChange={(event) =>
+                  handleInputChange("maxAvgLastTxMCAP", event.target.value)
+                }
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className="svg-custom-style lucide lucide-chart-bar h-4 w-4 text-purple-500"
+                  >
+                    <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                    <path d="M7 16h8"></path>
+                    <path d="M7 11h12"></path>
+                    <path d="M7 6h3"></path>
+                  </svg>
+                }
+              />
+            </div>
+          </Dropdown>
         </Dropdown>
       </div>
     </div>
