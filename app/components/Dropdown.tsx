@@ -14,7 +14,11 @@ const Dropdown: React.FC<DropdownProps> = ({ title, icon, children }) => {
   };
 
   return (
-    <div className="border-b border-slate-700 py-2">
+    <div
+      className={
+        title == "MCAP PARAMETERS" ? `py-2` : `border-b border-slate-700 py-2`
+      }
+    >
       <h3 data-orientation="vertical" data-state="open" className="flex">
         <button
           type="button"

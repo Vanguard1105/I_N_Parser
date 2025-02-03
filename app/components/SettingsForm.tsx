@@ -6,6 +6,7 @@ import CustomDropdown from "./CustomDropdown";
 import NameInput from "./NameInput";
 import Slider from "./Slider";
 import LabelWithIcon from "./LabelWithIcon";
+import moment from "moment-timezone";
 
 const SettingsForm: React.FC = () => {
   const [settings, setSettings] = useState({
@@ -58,6 +59,9 @@ const SettingsForm: React.FC = () => {
     maxAvgFirstTxMCAP: "",
     minAvgLastTxMCAP: "",
     maxAvgLastTxMCAP: "",
+    afkEnable: true,
+    timezone: "Europe/Berlin",
+    timesPerDay: "1 Per Day at 8:00 AM",
   });
 
   const [selectedOption, setSelectedOption] = useState(
@@ -152,11 +156,18 @@ const SettingsForm: React.FC = () => {
     const newValue = Math.round(percentage * (10000 - 100) + 100); // Calculate new value directly from click
     handleRocketChange(newValue.toString());
   };
-
-  const options = [
-    { value: "6793b79af4b7571a5e546eec", label: "vanguard_1" },
-    // Add more options if needed
+  const sourceOptions = [
+    { value: "all", label: "All" },
+    { value: "pumpfun", label: "Pump Fun Migrated" },
+    { value: "dexscreener", label: "Dexscreener" },
   ];
+  const [selectedSource, setSelectedSource] = useState("all");
+
+  const handleSourceChange = (value: string) => {
+    setSelectedSource(value);
+    handleInputChange("source", value); // Update settings with the new source
+  };
+  const options = [{ value: "6793b79af4b7571a5e546eec", label: "vanguard_1" }];
 
   const statisticPeriodOptions = [
     { value: "1", label: "1d" },
@@ -174,6 +185,29 @@ const SettingsForm: React.FC = () => {
     { value: "tokensTotal", label: "Traded Tokens" },
   ];
 
+  const timezoneOptions = moment.tz.names().map((tz) => ({
+    value: tz,
+    label: tz,
+  }));
+  const [selectedTimezone, setSelectedTimezone] = useState("Europe/Berlin");
+
+  const handleTimezoneChange = (value: string) => {
+    setSelectedTimezone(value);
+    handleInputChange("timezone", value); // Update settings with the new timezone
+  };
+
+  const timesPerDayOptions = [
+    { value: "24", label: "1 Per Day at 8:00 AM" },
+    { value: "12", label: "Every 12 hours" },
+    { value: "8", label: "Every 8 hours" },
+    { value: "4", label: "Every 4 hours" },
+  ];
+  const [selectedTimesPerDay, setSelectedTimesPerDay] = useState("24");
+
+  const handleTimesPerDayChange = (value: string) => {
+    setSelectedTimesPerDay(value);
+    handleInputChange("timesPerDay", value); // Update settings with the new timesPerDay
+  };
   return (
     <div className="flex flex-col bg-slate-900 mt-4 w-[calc(100% - 8px)] h-[100%] mx-1 px-2">
       <div className="flex flex-row justify-between p-2 w-full items-center">
@@ -443,8 +477,9 @@ const SettingsForm: React.FC = () => {
                     <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
                     <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
                   </svg>
-                  Rocket is ≥<u> {settings.rocketIs} % ( 1x ) </u>ROI in one
-                  trade
+                  Rocket is ≥{/* <u> */} {settings.rocketIs} % ({" "}
+                  {Math.floor(Number(settings.rocketIs) / 100)}x ) {/* </u> */}
+                  ROI in one trade
                 </label>
                 <div>
                   <span
@@ -1259,6 +1294,132 @@ const SettingsForm: React.FC = () => {
               />
             </div>
           </Dropdown>
+        </Dropdown>
+        <Dropdown
+          title="AFK MODE PARAMS"
+          icon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="svg-custom-style lucide lucide-keyboard h-4 w-4 text-gray-400"
+            >
+              <path d="M10 8h.01" />
+              <path d="M12 12h.01" />
+              <path d="M14 8h.01" />
+              <path d="M16 12h.01" />
+              <path d="M18 8h.01" />
+              <path d="M6 8h.01" />
+              <path d="M7 16h10" />
+              <path d="M8 12h.01" />
+              <rect width="20" height="16" x="2" y="4" rx="2" />
+            </svg>
+          }
+        >
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <label
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2  text-slate-100"
+                htmlFor="addTxtFile"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  className="svg-custom-style lucide lucide-clock h-4 w-4 text-green-500 "
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                AFK Mode Enabled
+              </label>
+              <div className="space-y-1">
+                <div>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={settings.afkEnable}
+                    data-state={settings.afkEnable ? "checked" : "unchecked"}
+                    value="on"
+                    className="peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-gray-300"
+                    id="afkEnable"
+                    onClick={() =>
+                      handleCheckboxChange("afkEnable", !settings.afkEnable)
+                    }
+                  >
+                    <span className="sr-only">Enable AFK Mode</span>
+                    <span
+                      aria-hidden="true"
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out ${
+                        settings.afkEnable ? "translate-x-4" : "translate-x-0"
+                      }`}
+                    ></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="space-y-4 py-2">
+            <LabelWithIcon
+              label={`Timezone`}
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  className="svg-custom-style lucide lucide-clock h-4 w-4 text-blue-500 svg-custom-style"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              }
+              htmlFor="minAvgTradeDuration"
+            />
+            <CustomDropdown
+              options={timezoneOptions}
+              value={selectedTimezone}
+              onChange={handleTimezoneChange}
+            />
+          </div>
+          <div className="space-y-4 py-2">
+            <LabelWithIcon
+              label={`Source`}
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  className="svg-custom-style lucide lucide-clock h-4 w-4 text-blue-500 svg-custom-style"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              }
+              htmlFor="sourceOptions"
+            />
+            <CustomDropdown
+              options={sourceOptions}
+              value={selectedSource}
+              onChange={handleSourceChange}
+            />
+          </div>
+          <div className="space-y-4 py-2">
+            <LabelWithIcon
+              label={`Times Per Day`}
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  className="svg-custom-style lucide lucide-clock h-4 w-4 text-yellow-500"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              }
+              htmlFor="sourceOptions"
+            />
+            <CustomDropdown
+              options={timesPerDayOptions}
+              value={selectedTimesPerDay}
+              onChange={handleTimesPerDayChange}
+            />
+          </div>
         </Dropdown>
       </div>
     </div>
