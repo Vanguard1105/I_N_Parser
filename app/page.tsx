@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import SettingsForm from "./components/SettingsForm";
+import TableSettingsForm from "./components/TableSettingsForm";
 
 const Home: React.FC = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -22,7 +23,7 @@ const Home: React.FC = () => {
           Table Configuration
         </div>
       </div>
-      {tabIndex === 0 ? <SettingsForm /> : <div></div>}
+      {tabIndex === 0 ? <SettingsForm /> : <TableSettingsForm />}
     </div>
   );
 };

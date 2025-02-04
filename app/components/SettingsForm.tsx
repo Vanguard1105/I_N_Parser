@@ -1421,6 +1421,9 @@ const SettingsForm: React.FC = () => {
             />
           </div>
         </Dropdown>
+        <div className="flex justify-center rounded-md bg-blue-600 hover:bg-blue-700 hover:cursor-pointer my-4 px-4 py-0.5 text-slate-100">
+          Save Settings
+        </div>
       </div>
     </div>
   );

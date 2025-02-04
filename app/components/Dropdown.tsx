@@ -4,9 +4,15 @@ interface DropdownProps {
   title: string;
   icon: React.ReactNode;
   children: React.ReactNode;
+  className?: string;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ title, icon, children }) => {
+const Dropdown: React.FC<DropdownProps> = ({
+  title,
+  icon,
+  children,
+  className,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -15,9 +21,7 @@ const Dropdown: React.FC<DropdownProps> = ({ title, icon, children }) => {
 
   return (
     <div
-      className={
-        title == "MCAP PARAMETERS" ? `py-2` : `border-b border-slate-700 py-2`
-      }
+      className={`${title === "MCAP PARAMETERS" ? "py-2" : "border-b border-slate-700 py-2"} ${className ? className : ""}`}
     >
       <h3 data-orientation="vertical" data-state="open" className="flex">
         <button
