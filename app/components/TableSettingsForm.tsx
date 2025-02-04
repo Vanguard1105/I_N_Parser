@@ -1,13 +1,7 @@
 // my-telegram-mini-app/app/components/TableSettingsForm.tsx
 import React, { useState, useCallback } from "react";
-import Dropdown from "./Dropdown";
-import ParameterInput from "./ParameterInput";
 import CustomDropdown from "./CustomDropdown";
-import NameInput from "./NameInput";
-import Slider from "./Slider";
-import LabelWithIcon from "./LabelWithIcon";
-import moment from "moment-timezone";
-import { svg } from "d3-fetch";
+import DragItem from "./DragItem";
 
 const TableSettingsForm: React.FC = () => {
   const [settings, setSettings] = useState({
@@ -19,9 +13,12 @@ const TableSettingsForm: React.FC = () => {
     tokenGroup: false,
     tokenHightlight: false,
     tokenZebraStripe: false,
+    mainCheck: false,
+    columnCheck: false,
+    distributionCheck: false,
   });
 
-  const handleInputChange = (name: string, value: string) => {
+  const handleInputChange = (name: string, value: any) => {
     setSettings((prevSettings) => ({
       ...prevSettings,
       [name]: value,
@@ -47,7 +44,7 @@ const TableSettingsForm: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col bg-slate-900 mt-4 w-[calc(100% - 8px)] h-[100%] mx-1 px-2 text-slate-100 text-[14px]">
+    <div className="flex flex-col bg-slate-900 mt-4 w-[calc(100% - 8px)] mx-1 px-2 text-slate-100 text-[14px]">
       <div className="justify-between px-2 pt-6 pb-2 w-full items-center">
         <div className="text-[24px]">Table Configuration</div>
       </div>
@@ -308,7 +305,26 @@ const TableSettingsForm: React.FC = () => {
           </div>
         </div>
       </div>
-
+      <div className="w-full px-2 space-y-2">
+        <DragItem
+          title="Main"
+          id="mainCheck"
+          checked={settings.mainCheck}
+          onChange={handleInputChange}
+        />
+        <DragItem
+          title="Tokens Columns settings"
+          id="columnCheck"
+          checked={settings.columnCheck}
+          onChange={handleInputChange}
+        />
+        <DragItem
+          title="Distribution"
+          id="distributionCheck"
+          checked={settings.distributionCheck}
+          onChange={handleInputChange}
+        />
+      </div>
       <div className="flex flex-row px-2 space-x-4">
         <div className="flex justify-center rounded-md bg-blue-600 hover:bg-blue-700 hover:cursor-pointer my-4 px-4 py-1.5 text-slate-100 w-[50%]">
           Save

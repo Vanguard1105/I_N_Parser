@@ -8,7 +8,7 @@ const Home: React.FC = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <div className="flex flex-col bg-slate-800 m-1 rounded-xl h-screen">
+    <div className="flex flex-col bg-slate-800 m-1 rounded-xl">
       <div className="flex flex-row bg-[#33415580] rounded-lg w-[100% -8px] m-1">
         <div
           className={`rounded-md w-[50%] text-center my-1 ml-1 cursor-pointer text-sm p-1 ${tabIndex === 0 ? "bg-slate-900 text-white" : "bg-[#33415580] text-slate-300"}`}

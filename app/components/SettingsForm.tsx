@@ -209,7 +209,7 @@ const SettingsForm: React.FC = () => {
     handleInputChange("timesPerDay", value); // Update settings with the new timesPerDay
   };
   return (
-    <div className="flex flex-col bg-slate-900 mt-4 w-[calc(100% - 8px)] h-[100%] mx-1 px-2">
+    <div className="flex flex-col bg-slate-900 mt-4 w-[calc(100% - 8px)] h-screen mx-1 px-2">
       <div className="flex flex-row justify-between p-2 w-full items-center">
         <div className="text-white">Setting Menu</div>
         <div className="flex flex-row gap-2 py-5">
